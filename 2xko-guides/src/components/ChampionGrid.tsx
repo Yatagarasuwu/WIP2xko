@@ -13,15 +13,21 @@ export default function ChampionGrid({
   onSelect,
 }: Props) {
   return (
-    <div className="grid grid-cols-4 md:grid-cols-6 gap-4">
-      {champions.map((champ) => (
-        <ChampionCard
-          key={champ.id}
-          champion={champ}
-          selected={selected.some((c) => c.id === champ.id)}
-          onClick={onSelect}
-        />
-      ))}
+    <div>
+      <h2 className="text-sm text-zinc-400 mb-3">
+        Select Champions
+      </h2>
+
+      <div className="grid grid-cols-6 gap-3">
+        {champions.map((champ) => (
+          <ChampionCard
+            key={champ.id}
+            champion={champ}
+            selected={selected.some((c) => c.id === champ.id)}
+            onClick={onSelect}
+          />
+        ))}
+      </div>
     </div>
   );
 }

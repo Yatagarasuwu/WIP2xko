@@ -10,27 +10,40 @@ export default function SelectedChampions({
   onClear,
 }: Props) {
   return (
-    <div className="p-4 border rounded mb-4">
-      <h2 className="font-bold mb-2">Selected Team</h2>
+    <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="font-semibold">Your Team</h2>
+
+        <button
+          onClick={onClear}
+          className="text-sm text-red-400 hover:text-red-300"
+        >
+          Clear
+        </button>
+      </div>
 
       <div className="flex gap-4">
+        {selected.length === 0 && (
+          <div className="text-zinc-500 text-sm">
+            Select 2 champions
+          </div>
+        )}
+
         {selected.map((champ) => (
-          <div key={champ.id} className="text-center">
+          <div
+            key={champ.id}
+            className="flex flex-col items-center gap-1"
+          >
             <img
               src={`/champions/${champ.image}`}
-              className="w-16 h-16 rounded"
+              className="w-16 h-16 rounded-lg border border-zinc-700"
             />
-            <div className="text-xs">{champ.name}</div>
+            <span className="text-xs text-zinc-300">
+              {champ.name}
+            </span>
           </div>
         ))}
       </div>
-
-      <button
-        onClick={onClear}
-        className="mt-3 text-sm text-red-400"
-      >
-        Clear
-      </button>
     </div>
   );
 }
