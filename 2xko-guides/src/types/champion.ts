@@ -1,4 +1,3 @@
-import { StaticImageData } from "next/image";
 
 export type CharacterId =
   | "ahri"
@@ -20,5 +19,5 @@ export type CharacterId =
 export interface Champion {
   id: CharacterId;
   name: string;
-  image: StaticImageData;
+  image: string;
 }
