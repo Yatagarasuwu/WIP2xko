@@ -18,18 +18,24 @@ export default function Home() {
       }
 
       if (prev.length >= 2) {
-        return [prev[1], champion]; // replace oldest pick
+        return [prev[1], champion];
       }
 
       return [...prev, champion];
     });
   };
 
-  const clear = () => setSelected([]);
-
   return (
-    <main className="p-6 space-y-6">
-      <SelectedChampions selected={selected} onClear={clear} />
+    
+    <main className="p-6 max-w-6xl mx-auto space-y-6">
+      <SelectedChampions
+        selected={selected}
+        onClear={() => setSelected([])}
+      />
+
+      <div className="p-10 text-white bg-red-500 text-3xl">
+  TAILWIND TEST
+</div>
 
       <ChampionGrid
         champions={champions}
