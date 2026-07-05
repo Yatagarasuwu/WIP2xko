@@ -1,6 +1,3 @@
-import { CharacterId } from "./champion";
-import { Video } from "./video";
-
 export type ResourceType =
   | "combo"
   | "mixup"
@@ -9,18 +6,17 @@ export type ResourceType =
   | "pressure"
   | "punish";
 
-export interface Resource {
+export type Video = {
+  url: string;
+  label?: string;
+};
+
+export type Resource = {
   id: string;
-
   title: string;
-
-  description: string;
-
+  championId: string;
   type: ResourceType;
-
-  characters: CharacterId[];
-
   tags: string[];
-
+  description?: string;
   videos: Video[];
-}
+};

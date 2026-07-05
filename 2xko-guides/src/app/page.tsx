@@ -1,47 +1,49 @@
 "use client";
 
-import ChampionGrid from "@/components/ChampionGrid";
-import SelectedChampions from "@/components/SelectedChampions";
 import { champions } from "@/data/champions";
 import { Champion } from "@/types/champion";
 import { useState } from "react";
 
+import ChampionGrid from "@/components/champions/ChampionGrid";
+import TeamSidebar from "@/components/champions/TeamSidebar";
+
 export default function Home() {
   const [selected, setSelected] = useState<Champion[]>([]);
 
-  const handleSelect = (champion: Champion) => {
+  const handleSelect = (champ: Champion) => {
     setSelected((prev) => {
-      const exists = prev.find((c) => c.id === champion.id);
+      const exists = prev.some((c) => c.id === champ.id);
 
       if (exists) {
-        return prev.filter((c) => c.id !== champion.id);
+        return prev.filter((c) => c.id !== champ.id);
       }
 
-      if (prev.length >= 2) {
-        return [prev[1], champion];
-      }
+      if (prev.length >= 2) return prev;
 
-      return [...prev, champion];
+      return [...prev, champ];
     });
   };
 
+  const handleRemove = (champ: Champion) => {
+    setSelected((prev) =>
+      prev.filter((c) => c.id !== champ.id)
+    );
+  };
+
   return (
-    
-    <main className="p-6 max-w-6xl mx-auto space-y-6">
-      <SelectedChampions
-        selected={selected}
-        onClear={() => setSelected([])}
-      />
+    <div className="flex min-h-screen">
+      <div className="flex-1 p-6">
+        <ChampionGrid
+          champions={champions}
+          selected={selected}
+          onSelect={handleSelect}
+        />
+      </div>
 
-      <div className="p-10 text-white bg-red-500 text-3xl">
-  TAILWIND TEST
-</div>
-
-      <ChampionGrid
-        champions={champions}
+      <TeamSidebar
         selected={selected}
-        onSelect={handleSelect}
+        onRemove={handleRemove}
       />
-    </main>
+    </div>
   );
 }
