@@ -1,13 +1,11 @@
-export type VideoType = "youtube" | "twitter" | "mp4";
+export type VideoType = "youtube" | "mp4" | "twitter";
 
-export interface Video {
+export type Video = {
   id: string;
-
   type: VideoType;
-
   url: string;
 
-  startTime?: number;
-
-  endTime?: number;
-}
+  // optional features
+  title?: string;
+  startTime?: number; // seconds
+};
