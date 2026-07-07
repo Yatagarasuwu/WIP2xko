@@ -1,11 +1,11 @@
 import { Board } from "@/types/board";
 import BoardCard from "./BoardCard";
 
-type Props = {
+export default function BoardList({
+  boards,
+}: {
   boards: Board[];
-};
-
-export default function BoardList({ boards }: Props) {
+}) {
   return (
     <div className="grid gap-4">
       {boards.map((board) => (

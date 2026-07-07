@@ -1,27 +1,32 @@
 import { Board } from "@/types/board";
+import Link from "next/link";
 
-type Props = {
+export default function BoardCard({
+  board,
+}: {
   board: Board;
-};
-
-export default function BoardCard({ board }: Props) {
+}) {
   return (
-    <div className="rounded-lg border border-zinc-800 p-4">
-      <h2 className="font-bold">
-        {board.title}
-      </h2>
+    <Link href={`/boards/${board.id}`}>
+      <div className="rounded-lg border border-zinc-800 p-4 hover:border-blue-500 transition cursor-pointer">
 
-      <p className="text-sm text-zinc-400">
-        {board.description}
-      </p>
+        <h2 className="text-lg font-bold">
+          {board.title}
+        </h2>
 
-      <div className="mt-3 text-xs">
-        Champions: {board.champions.join(" + ")}
+        <p className="text-sm text-zinc-400 mt-2">
+          {board.description}
+        </p>
+
+        <div className="mt-4 text-xs">
+          Team: {board.champions.join(" + ")}
+        </div>
+
+        <div className="text-xs mt-1">
+          {board.resourceIds.length} resources
+        </div>
+
       </div>
-
-      <div className="mt-2 text-xs">
-        {board.resourceIds.length} resources
-      </div>
-    </div>
+    </Link>
   );
 }
