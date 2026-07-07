@@ -1,18 +1,14 @@
-import { CharacterId } from "./champion";
+export type Board = {
+    id: string;
 
-export interface Board {
+    title: string;
+    description: string;
 
-  id: string;
+    champions: string[];
 
-  title: string;
+    resourceIds: string[];
 
-  description: string;
+    notes: string;
 
-  owner: string;
-
-  team: CharacterId[];
-
-  resourceIds: string[];
-
-  isPublic: boolean;
-}
+    isPublic: boolean;
+};

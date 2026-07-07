@@ -1,5 +1,9 @@
 import "./globals.css";
 
+
+
+import Script from "next/script";
+
 export default function RootLayout({
   children,
 }: {
@@ -7,7 +11,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+
+        <Script src="https://platform.twitter.com/widgets.js" />
+      </body>
     </html>
   );
 }
