@@ -1,12 +1,28 @@
-import VideoPlayer from "@/components/resources/videos/VideoPlayer";
 import { Video } from "@/types/video";
+import VideoPlayer from "./VideoPlayer";
 
-export default function VideoList({ videos }: { videos: Video[] }) {
+
+type Props = {
+  videos: Video[];
+};
+
+
+export default function VideosList({
+  videos,
+}: Props) {
+
   return (
     <div className="space-y-4">
-      {videos.map((v) => (
-        <VideoPlayer key={v.id} video={v} />
+
+      {videos.map((video) => (
+
+        <VideoPlayer
+          key={video.id}
+          video={video}
+        />
+
       ))}
+
     </div>
   );
 }

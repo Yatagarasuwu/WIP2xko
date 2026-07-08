@@ -1,34 +1,86 @@
 import { Resource } from "@/types/resource";
+import VideosList from "./videos/VideosList";
+
+
+type Props = {
+  resource: Resource;
+};
+
 
 export default function ResourceCard({
   resource,
-}: {
-  resource: Resource;
-}) {
+}: Props) {
+
   return (
-    <div className="border border-zinc-800 rounded p-3">
-      <div className="text-sm font-semibold">
-        {resource.title}
+
+    <div
+      className="
+      border
+      border-zinc-800
+      rounded-xl
+      p-5
+      space-y-3
+      "
+    >
+
+      <div>
+
+        <h3 className="text-lg font-bold">
+          {resource.title}
+        </h3>
+
+
+        <p className="text-sm text-zinc-400">
+          {resource.type}
+        </p>
+
       </div>
 
-      <div className="text-xs text-zinc-500">
-        {resource.type}
-      </div>
 
-      <div className="flex gap-1 flex-wrap mt-2">
-        {resource.tags.map((t) => (
-          <span
-            key={t}
-            className="text-[10px] bg-zinc-800 px-2 py-0.5 rounded"
-          >
-            {t}
-          </span>
-        ))}
-      </div>
 
-      <div className="mt-2 text-xs text-zinc-400">
+      <p className="text-sm">
         {resource.description}
+      </p>
+
+
+
+      <div className="flex gap-2 flex-wrap">
+
+        {resource.tags.map(tag => (
+
+          <span
+            key={tag}
+            className="
+            text-xs
+            bg-zinc-800
+            rounded
+            px-2
+            py-1
+            "
+          >
+
+            {tag}
+
+          </span>
+
+        ))}
+
       </div>
+
+
+
+      {
+        resource.videos.length > 0 && (
+
+          <VideosList
+            videos={resource.videos}
+          />
+
+        )
+      }
+
+
     </div>
+
   );
 }
