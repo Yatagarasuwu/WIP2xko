@@ -1,84 +1,208 @@
+"use client";
+
 import { Resource } from "@/types/resource";
-import ResourceCard from "./ResourceCard";
+
+import VideoAccordian from "@/components/resources/videos/VideoAccordian";
 
 
 type Props = {
-  resources: Resource[];
+
+  resource: Resource;
+
+  index:number;
+
+  onEdit:(
+    resource:Resource
+  )=>void;
+
+  onDelete:(
+    id:string
+  )=>void;
+
+  onMove:(
+    index:number,
+    direction:"up"|"down"
+  )=>void;
+
 };
 
 
-export default function ResourceList({
-  resources,
-}: Props) {
 
 
-  const groups = [
-    "combo",
-    "mixup",
-    "oki",
-    "pressure",
-    "neutral",
-    "punish"
-  ];
+export default function ResourceCard({
 
+  resource,
+
+  index,
+
+  onEdit,
+
+  onDelete,
+
+  onMove,
+
+}:Props){
 
 
   return (
 
-    <div className="space-y-10">
+    <div
 
+      className="
+      border
+      border-zinc-800
+      rounded-lg
+      p-4
+      space-y-4
+      "
 
-      {groups.map(type => {
-
-
-        const filtered =
-          resources.filter(
-            r => r.type === type
-          );
-
-
-        if(filtered.length === 0)
-          return null;
+    >
 
 
 
-        return (
+      <div>
 
-          <section key={type}>
+        <h2 className="text-lg font-bold">
 
+          {resource.title}
 
-            <h2 className="
-              text-2xl
-              font-bold
-              capitalize
-              mb-4
-            ">
-
-              {type}
-
-            </h2>
+        </h2>
 
 
 
-            <div className="space-y-4">
+        <p className="text-sm text-zinc-400">
 
-              {filtered.map(resource => (
+          {resource.description}
 
-                <ResourceCard
-                  key={resource.id}
-                  resource={resource}
-                />
+        </p>
 
-              ))}
-
-            </div>
+      </div>
 
 
-          </section>
 
-        );
 
-      })}
+
+
+      {
+        resource.videos.length > 0 && (
+
+          <VideoAccordian
+
+            videos={resource.videos}
+
+          />
+
+        )
+      }
+
+
+
+
+
+
+
+
+      <div className="flex gap-2">
+
+
+        <button
+
+          onClick={() =>
+            onMove(
+              index,
+              "up"
+            )
+          }
+
+          className="
+          px-2
+          py-1
+          border
+          rounded
+          "
+
+        >
+
+          ↑
+
+        </button>
+
+
+
+
+
+        <button
+
+          onClick={() =>
+            onMove(
+              index,
+              "down"
+            )
+          }
+
+          className="
+          px-2
+          py-1
+          border
+          rounded
+          "
+
+        >
+
+          ↓
+
+        </button>
+
+
+
+
+
+        <button
+
+          onClick={() =>
+            onEdit(resource)
+          }
+
+          className="
+          px-3
+          py-1
+          bg-zinc-700
+          rounded
+          "
+
+        >
+
+          Edit
+
+        </button>
+
+
+
+
+
+        <button
+
+          onClick={() =>
+            onDelete(
+              resource.id
+            )
+          }
+
+          className="
+          px-3
+          py-1
+          bg-red-700
+          rounded
+          "
+
+        >
+
+          Delete
+
+        </button>
+
+
+      </div>
 
 
     </div>

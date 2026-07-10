@@ -1,91 +1,41 @@
 import { Resource } from "@/types/resource";
 
-
 export const resources: Resource[] = [
 
   {
-    id: "ekko-bnb",
+    id:"ekko-bnb",
 
-    title: "Ekko Meterless BnB",
+    title:"Ekko Meterless BnB",
 
-    championId: "ekko",
+    championId:"ekko",
 
-    type: "combo",
+    type:"combo",
 
-    tags: [
+    description:
+      "Basic Ekko combo route after launcher.",
+
+    tags:[
       "starter",
-      "meterless",
-      "beginner"
+      "meterless"
     ],
 
-    description:
-      "Basic Ekko combo route after a launcher.",
-
-    videos: [
+    videos:[
       {
-        id: "ekko-bnb-video",
+        id:"ekko-bnb-video",
 
-        type: "youtube",
+        type:"youtube",
 
-        url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        url:"https://youtube.com/example",
 
-        title: "Ekko BnB Example",
+        title:"Ekko BnB",
 
-        startTime: 0
+        description:
+          "Basic meterless route.",
+
+        links:[]
       }
     ]
-  },
 
-
-  {
-    id: "ahri-mixup",
-
-    title: "Ahri Dash Mixup",
-
-    championId: "ahri",
-
-    type: "mixup",
-
-    tags: [
-      "reset",
-      "left-right"
-    ],
-
-    description:
-      "Basic Ahri pressure reset after knockdown.",
-
-    videos: [
-      {
-        id: "ahri-mixup-video",
-
-        type: "youtube",
-
-        url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-
-        title: "Ahri Mixup Example"
-      }
-    ]
-  },
-
-
-  {
-    id: "ekko-oki",
-
-    title: "Ekko Oki Setup",
-
-    championId: "ekko",
-
-    type: "oki",
-
-    tags: [
-      "knockdown",
-      "pressure"
-    ],
-
-    description:
-      "Post-knockdown pressure setup.",
-
-    videos: []
   }
 
 ];

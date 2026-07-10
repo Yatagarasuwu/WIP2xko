@@ -15,21 +15,15 @@ export type Resource = {
 
   id:string;
 
-
   title:string;
-
 
   championId:string;
 
-
   type:ResourceType;
-
 
   description:string;
 
-
   tags:string[];
-
 
   videos:Video[];
 

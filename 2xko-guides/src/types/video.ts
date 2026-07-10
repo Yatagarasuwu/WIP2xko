@@ -4,16 +4,32 @@ export type VideoType =
   | "twitter";
 
 
+export type VideoLink = {
+
+  id:string;
+
+  label:string;
+
+  targetResourceId:string;
+
+};
+
+
+
 export type Video = {
 
-  id: string;
+  id:string;
 
-  type: VideoType;
+  type:VideoType;
 
-  url: string;
+  url:string;
 
-  title?: string;
+  title?:string;
 
-  startTime?: number;
+  description?:string;
+
+  startTime?:number;
+
+  links:VideoLink[];
 
 };
