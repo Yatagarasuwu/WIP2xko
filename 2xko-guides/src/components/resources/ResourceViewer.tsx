@@ -1,8 +1,8 @@
 import { Resource } from "@/types/resource";
 
 import RelatedResources from "./RelatedResources";
-import VideoCarousel from "./videos/VideoAccordian";
 
+import VideoAccordion from "./videos/VideoAccordian";
 
 export default function ResourceViewer({
 
@@ -40,9 +40,11 @@ return (
 
 
 
-<VideoCarousel
+<VideoAccordion
 
-videos={resource.videos}
+  videos={resource.videos}
+
+  allResources={related}
 
 />
 

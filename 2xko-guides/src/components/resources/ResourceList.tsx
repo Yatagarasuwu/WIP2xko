@@ -2,7 +2,7 @@
 
 import { Resource } from "@/types/resource";
 
-import VideoAccordian from "@/components/resources/videos/VideoAccordian";
+ 
 
 
 type Props = {
@@ -83,17 +83,7 @@ export default function ResourceCard({
 
 
 
-      {
-        resource.videos.length > 0 && (
-
-          <VideoAccordian
-
-            videos={resource.videos}
-
-          />
-
-        )
-      }
+    
 
 
 

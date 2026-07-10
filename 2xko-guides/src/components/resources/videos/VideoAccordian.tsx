@@ -6,12 +6,15 @@ import { Video } from "@/types/video";
 
 import VideoPlayer from "./VideoPlayer";
 
+import { Resource } from "@/types/resource";
 import VideoLinks from "./VideoLinks";
 
 
 type Props = {
 
-  videos:Video[];
+  videos: Video[];
+
+  allResources: Resource[];
 
 };
 
@@ -21,7 +24,9 @@ export default function VideoAccordion({
 
   videos,
 
-}:Props){
+  allResources,
+
+}: Props) {
 
 
   const [open,setOpen] =
@@ -159,13 +164,13 @@ export default function VideoAccordion({
 
 
 
-                  <VideoLinks
+                 <VideoLinks
 
-                    links={
-                      video.links
-                    }
+links={video.links}
 
-                  />
+allResources={allResources}
+
+/>
 
 
                 </div>

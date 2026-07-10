@@ -150,7 +150,7 @@ export default function ResourceCard({
                   videos={
                     resource.videos
                   }
-
+                  allResources={allResources}
                 />
 
               )
