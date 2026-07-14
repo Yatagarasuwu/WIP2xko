@@ -444,9 +444,7 @@ export default function ResourceForm({
           Neutral
         </option>
 
-        <option value="punish">
-          Punish
-        </option>
+        
 
       </select>
 

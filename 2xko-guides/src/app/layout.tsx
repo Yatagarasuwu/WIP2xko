@@ -12,9 +12,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
+        
 
         <Script src="https://platform.twitter.com/widgets.js" />
+
+        <main
+  className="
+    mx-auto
+    max-w-6xl
+    px-8
+    py-8
+  "
+>
+  {children}
+</main>
       </body>
     </html>
   );

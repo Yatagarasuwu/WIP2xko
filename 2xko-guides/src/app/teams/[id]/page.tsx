@@ -22,26 +22,40 @@ export default async function TeamPage({
   const parts = id.split("-");
 
 
-  const championIds = parts.slice(0, 2);
+  // supports both:
+  // ekko-123456
+  // ekko-ahri-123456
+
+  const championIds =
+    parts.slice(0, -1);
 
 
 
-  const selectedChampions = champions.filter(
-    (champ) =>
-      championIds.includes(champ.id)
-  );
+  const selectedChampions =
+    champions.filter(
+      champ =>
+        championIds.includes(champ.id)
+    );
 
 
 
-  if (selectedChampions.length !== 2) {
+  if (
+    selectedChampions.length !== championIds.length ||
+    selectedChampions.length === 0
+  ) {
+
     notFound();
+
   }
 
 
 
-  const teamResources = resources.filter(
-    () => false
-  );
+
+  const teamResources =
+    resources.filter(
+      () => false
+    );
+
 
 
 
@@ -54,22 +68,34 @@ export default async function TeamPage({
 
         team={{
           id,
-          champions: championIds,
-          resources: []
+
+          champions:
+            championIds,
+
+          resources:
+            []
+
         }}
 
-        champions={selectedChampions}
+        champions={
+          selectedChampions
+        }
 
       />
 
 
 
       <ResourceSection
-        resources={teamResources}
+
+        resources={
+          teamResources
+        }
+
       />
 
 
     </main>
 
   );
+
 }

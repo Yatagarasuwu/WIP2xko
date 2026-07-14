@@ -57,10 +57,7 @@ export default function ResourceFilters({
       value:"neutral"
     },
 
-    {
-      label:"Punish",
-      value:"punish"
-    },
+    
 
   ];
 

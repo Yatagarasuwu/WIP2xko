@@ -2,10 +2,8 @@
 
 import { Resource } from "@/types/resource";
 
-import ResourceForm from "./ResourceForm";
-
 import VideoAccordian from "@/components/resources/videos/VideoAccordian";
-
+import ResourceForm from "./ResourceForm";
 
 type Props = {
 
@@ -13,37 +11,28 @@ type Props = {
 
   allResources: Resource[];
 
-  index:number;
+  index: number;
 
+  onEdit: (
+    resource: Resource
+  ) => void;
 
-  onEdit:(
-    resource:Resource
-  )=>void;
+  onDelete: (
+    id: string
+  ) => void;
 
+  onMove: (
+    index: number,
+    direction: "up" | "down"
+  ) => void;
 
-  onDelete:(
-    id:string
-  )=>void;
+  editingResource: Resource | null;
 
-
-  onMove:(
-    index:number,
-    direction:"up"|"down"
-  )=>void;
-
-
-  editingResource:Resource | null;
-
-
-  onSaveEdit:(
-    resource:Resource
-  )=>void;
+  onSaveEdit: (
+    resource: Resource
+  ) => void;
 
 };
-
-
-
-
 
 export default function ResourceCard({
 
@@ -63,14 +52,56 @@ export default function ResourceCard({
 
   onSaveEdit,
 
-}:Props){
-
-
+}: Props) {
 
   const isEditing =
     editingResource?.id === resource.id;
 
+  function getColors() {
 
+    switch (resource.type) {
+
+      case "combo":
+        return {
+          border: "border-l-blue-500",
+          badge: "bg-blue-600",
+        };
+
+      case "mixup":
+        return {
+          border: "border-l-purple-500",
+          badge: "bg-purple-600",
+        };
+
+      case "oki":
+        return {
+          border: "border-l-cyan-500",
+          badge: "bg-cyan-600",
+        };
+
+      case "pressure":
+        return {
+          border: "border-l-orange-500",
+          badge: "bg-orange-600",
+        };
+
+      case "neutral":
+        return {
+          border: "border-l-green-500",
+          badge: "bg-green-600",
+        };
+
+      default:
+        return {
+          border: "border-l-zinc-600",
+          badge: "bg-zinc-600",
+        };
+
+    }
+
+  }
+
+  const colors = getColors();
 
   return (
 
@@ -78,21 +109,22 @@ export default function ResourceCard({
 
       id={`resource-${resource.id}`}
 
-      className="
+      className={`
+      rounded-xl
       border
-      border-zinc-800
-      rounded-lg
-      p-4
-      space-y-4
-      "
+      border-zinc-700
+      border-l-4
+      ${colors.border}
+      bg-zinc-900
+      p-6
+      space-y-6
+      shadow-sm
+      `}
 
     >
 
-
-
-
-
       {
+
         isEditing ? (
 
           <ResourceForm
@@ -111,52 +143,84 @@ export default function ResourceCard({
 
           />
 
-        )
-        :
-        (
+        ) : (
 
           <>
 
+            <div className="space-y-4">
 
-            <h2 className="text-lg font-bold">
+              <span
 
-              {resource.title}
+                className={`
+                inline-flex
+                rounded-md
+                px-2
+                py-1
+                text-xs
+                font-bold
+                uppercase
+                tracking-wider
+                text-white
+                ${colors.badge}
+                `}
 
-            </h2>
+              >
 
+                {resource.type}
 
+              </span>
 
+              <div>
 
+                <h2 className="text-2xl font-bold">
 
-            <p className="text-sm text-zinc-400">
+                  {resource.title}
 
-              {resource.description}
+                </h2>
 
-            </p>
+                <p className="
+                  mt-2
+                  text-zinc-400
+                  leading-relaxed
+                ">
 
+                  {resource.description}
 
+                </p>
 
+              </div>
 
-
-
-
-
+            </div>
 
             {
+
               resource.videos.length > 0 && (
 
-                <VideoAccordian
+                <div
+                  className="
+                  border-t
+                  border-zinc-700
+                  pt-5
+                  "
+                >
 
-                  videos={
-                    resource.videos
-                  }
-                  allResources={allResources}
-                />
+                  <VideoAccordian
+
+                    videos={
+                      resource.videos
+                    }
+
+                    allResources={
+                      allResources
+                    }
+
+                  />
+
+                </div>
 
               )
+
             }
-
-
 
           </>
 
@@ -164,135 +228,112 @@ export default function ResourceCard({
 
       }
 
+      <div
+        className="
+        border-t
+        border-zinc-700
+        pt-5
+        flex
+        justify-between
+        items-center
+        "
+      >
 
+        <div className="flex gap-2">
 
+          <button
 
+            onClick={() =>
+              onMove(index, "up")
+            }
 
+            className="
+            rounded-md
+            border
+            border-zinc-700
+            bg-zinc-800
+            px-3
+            py-2
+            hover:bg-zinc-700
+            "
 
+          >
 
+            ↑
 
+          </button>
 
-      <div className="flex gap-2">
+          <button
 
+            onClick={() =>
+              onMove(index, "down")
+            }
 
+            className="
+            rounded-md
+            border
+            border-zinc-700
+            bg-zinc-800
+            px-3
+            py-2
+            hover:bg-zinc-700
+            "
 
+          >
 
+            ↓
 
-        <button
+          </button>
 
-          onClick={() =>
-            onMove(
-              index,
-              "up"
-            )
-          }
+        </div>
 
-          className="
-          px-2
-          py-1
-          border
-          rounded
-          "
+        <div className="flex gap-2">
 
-        >
+          <button
 
-          ↑
+            onClick={() =>
+              onEdit(resource)
+            }
 
-        </button>
+            className="
+            rounded-md
+            bg-blue-600
+            px-4
+            py-2
+            font-medium
+            hover:bg-blue-500
+            "
 
+          >
 
+            {isEditing ? "Editing..." : "Edit"}
 
+          </button>
 
+          <button
 
+            onClick={() =>
+              onDelete(resource.id)
+            }
 
+            className="
+            rounded-md
+            bg-red-700
+            px-4
+            py-2
+            font-medium
+            hover:bg-red-600
+            "
 
-        <button
+          >
 
-          onClick={() =>
-            onMove(
-              index,
-              "down"
-            )
-          }
+            Delete
 
-          className="
-          px-2
-          py-1
-          border
-          rounded
-          "
+          </button>
 
-        >
-
-          ↓
-
-        </button>
-
-
-
-
-
-
-
-        <button
-
-          onClick={() =>
-            onEdit(resource)
-          }
-
-          className="
-          px-3
-          py-1
-          bg-zinc-700
-          rounded
-          "
-
-        >
-
-          {
-            isEditing
-            ? "Editing..."
-            : "Edit"
-          }
-
-        </button>
-
-
-
-
-
-
-
-        <button
-
-          onClick={() =>
-            onDelete(
-              resource.id
-            )
-          }
-
-          className="
-          px-3
-          py-1
-          bg-red-700
-          rounded
-          "
-
-        >
-
-          Delete
-
-        </button>
-
-
-
-
+        </div>
 
       </div>
-
-
-
-
 
     </div>
 

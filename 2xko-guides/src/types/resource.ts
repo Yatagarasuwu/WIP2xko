@@ -6,8 +6,7 @@ export type ResourceType =
   | "mixup"
   | "oki"
   | "pressure"
-  | "neutral"
-  | "punish";
+  | "neutral";
 
 
 
