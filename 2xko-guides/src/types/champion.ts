@@ -1,7 +1,28 @@
+export type CharacterId =
+  | "ahri"
+  | "akali"
+  | "blitzcrank"
+  | "braum"
+  | "caitlyn"
+  | "darius"
+  | "ekko"
+  | "illaoi"
+  | "jinx"
+  | "senna"
+  | "teemo"
+  | "thresh"
+  | "vi"
+  | "warwick"
+  | "yasuo";
+
+
+
 export type Champion = {
-  id: string;
 
-  name: string;
+  id: CharacterId;
 
-  image: string;
+  name:string;
+
+  image:string;
+
 };

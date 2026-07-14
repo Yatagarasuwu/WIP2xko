@@ -549,9 +549,7 @@ export default function ResourceForm({
                   Twitter/X
                 </option>
 
-                <option value="mp4">
-                  MP4
-                </option>
+    
 
 
               </select>

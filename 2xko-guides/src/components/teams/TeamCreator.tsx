@@ -11,11 +11,11 @@ export default function TeamCreator() {
   const router = useRouter();
 
 
-  const [guideTitle,setGuideTitle] =
+  const [guideTitle, setGuideTitle] =
     useState("");
 
 
-  const [selected,setSelected] =
+  const [selected, setSelected] =
     useState<string[]>([]);
 
 
@@ -23,7 +23,7 @@ export default function TeamCreator() {
   function toggleChampion(id:string) {
 
 
-    if(selected.includes(id)) {
+    if (selected.includes(id)) {
 
       setSelected(
         selected.filter(
@@ -36,8 +36,7 @@ export default function TeamCreator() {
     }
 
 
-
-    if(selected.length < 2) {
+    if (selected.length < 2) {
 
       setSelected([
         ...selected,
@@ -51,13 +50,24 @@ export default function TeamCreator() {
 
 
 
-  function createGuide() {
+  async function createGuide() {
 
 
-    if(selected.length === 0) {
+    if (selected.length === 0) {
 
       alert(
-        "Please select at least one champion."
+        "Select at least one champion."
+      );
+
+      return;
+
+    }
+
+
+    if (!guideTitle.trim()) {
+
+      alert(
+        "Enter a guide title."
       );
 
       return;
@@ -66,10 +76,35 @@ export default function TeamCreator() {
 
 
 
-    if(!guideTitle.trim()) {
+    const response =
+      await fetch("/api/guides", {
+
+        method:"POST",
+
+        headers:{
+          "Content-Type":"application/json",
+        },
+
+        body:JSON.stringify({
+
+          title:guideTitle,
+
+          primaryChampion:
+            selected[0],
+
+          secondaryChampion:
+            selected[1] ?? null,
+
+        }),
+
+      });
+
+
+
+    if (!response.ok) {
 
       alert(
-        "Please enter a guide title."
+        "Failed to create guide."
       );
 
       return;
@@ -78,27 +113,25 @@ export default function TeamCreator() {
 
 
 
-    const id =
-      `${selected.join("-")}-${Date.now()}`;
+    const guide =
+      await response.json();
 
 
 
     router.push(
-      `/teams/${id}?title=${encodeURIComponent(guideTitle)}`
+      `/teams/${guide.id}`
     );
+
 
   }
 
 
 
 
+
   return (
 
-    <div className="
-      max-w-5xl
-      mx-auto
-      space-y-8
-    ">
+    <div className="max-w-5xl mx-auto space-y-8">
 
 
       <div>
@@ -112,7 +145,7 @@ export default function TeamCreator() {
 
         <p className="text-zinc-400 mt-2">
 
-          Create a guide for a champion or team.
+          Create a solo champion or team guide.
 
         </p>
 
@@ -122,8 +155,7 @@ export default function TeamCreator() {
 
 
 
-      <div className="space-y-2">
-
+      <div>
 
         <label className="font-semibold">
 
@@ -147,20 +179,17 @@ export default function TeamCreator() {
 
           className="
           w-full
+          mt-2
           rounded-lg
           border
           border-zinc-700
           bg-zinc-900
           p-3
-          outline-none
-          focus:border-blue-500
           "
 
         />
 
-
       </div>
-
 
 
 
@@ -175,16 +204,6 @@ export default function TeamCreator() {
           Select Champions
 
         </h2>
-
-
-
-        <p className="text-sm text-zinc-400">
-
-          Select one champion for a solo guide, or two for a team guide.
-
-        </p>
-
-
 
 
 
@@ -207,7 +226,6 @@ export default function TeamCreator() {
                 );
 
 
-
               return (
 
                 <button
@@ -223,26 +241,25 @@ export default function TeamCreator() {
                   }
 
 
+
                   className={`
 
-                    rounded-xl
-                    overflow-hidden
-                    border
-                    transition-all
-                    duration-150
+                  rounded-xl
+                  overflow-hidden
+                  border
+                  transition
 
-                    ${
-                      active
+                  ${
+                    active
 
-                      ?
+                    ? 
+                    "border-blue-500 scale-105"
 
-                      "border-blue-500 scale-105 shadow-lg shadow-blue-500/30"
+                    :
 
-                      :
+                    "border-zinc-700 hover:border-zinc-500"
 
-                      "border-zinc-700 hover:border-zinc-500 hover:scale-105"
-
-                    }
+                  }
 
                   `}
 
@@ -265,11 +282,9 @@ export default function TeamCreator() {
                   />
 
 
-
                   <div className="
-                    py-2
                     bg-zinc-900
-                    font-medium
+                    py-2
                   ">
 
                     {champion.name}
@@ -283,6 +298,7 @@ export default function TeamCreator() {
 
 
             })
+
           }
 
 
@@ -295,10 +311,7 @@ export default function TeamCreator() {
 
 
 
-
-
-      <div className="space-y-2">
-
+      <div>
 
         <h2 className="font-semibold">
 
@@ -307,87 +320,17 @@ export default function TeamCreator() {
         </h2>
 
 
-
-
-        <div className="flex gap-4">
-
+        <p className="text-zinc-400">
 
           {
-            selected.length === 0 && (
-
-              <span className="text-zinc-500">
-
-                No champions selected
-
-              </span>
-
-            )
+            selected.length
+            ? selected.join(" + ")
+            : "None"
           }
 
-
-
-
-
-          {
-            selected.map(id => {
-
-
-              const champion =
-                champions.find(
-                  c => c.id === id
-                );
-
-
-
-              if(!champion)
-                return null;
-
-
-
-              return (
-
-                <div
-                  key={id}
-                  className="text-center"
-                >
-
-                  <img
-
-                    src={champion.image}
-
-                    alt={champion.name}
-
-                    className="
-                    w-20
-                    rounded-lg
-                    border
-                    border-blue-500
-                    "
-
-                  />
-
-
-                  <p className="mt-2 text-sm">
-
-                    {champion.name}
-
-                  </p>
-
-
-                </div>
-
-              );
-
-
-            })
-          }
-
-
-        </div>
-
+        </p>
 
       </div>
-
 
 
 
@@ -412,8 +355,6 @@ export default function TeamCreator() {
         Create Guide
 
       </button>
-
-
 
 
     </div>

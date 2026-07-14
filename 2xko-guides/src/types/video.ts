@@ -1,6 +1,5 @@
 export type VideoType =
   | "youtube"
-  | "mp4"
   | "twitter";
 
 

@@ -1,48 +1,58 @@
 import { notFound } from "next/navigation";
 
 import { champions } from "@/data/champions";
-import { resources } from "@/data/resources";
+import { prisma } from "@/lib/prisma";
 
 import ResourceSection from "@/components/teams/ResourceSection";
 import TeamHeader from "@/components/teams/TeamHeader";
 
 
 export default async function TeamPage({
+
   params,
+
 }: {
+
   params: Promise<{
-    id: string;
+    id:string;
   }>;
+
 }) {
 
 
   const { id } = await params;
 
 
-  const parts = id.split("-");
+
+  const guide =
+    await prisma.guide.findUnique({
+
+      where:{
+        id
+      },
+
+      include:{
+        resources:{
+          include:{
+            videos:{
+              include:{
+                links:true
+              }
+            }
+          },
+
+          orderBy:{
+            order:"asc"
+          }
+
+        }
+      }
+
+    });
 
 
-  // supports both:
-  // ekko-123456
-  // ekko-ahri-123456
 
-  const championIds =
-    parts.slice(0, -1);
-
-
-
-  const selectedChampions =
-    champions.filter(
-      champ =>
-        championIds.includes(champ.id)
-    );
-
-
-
-  if (
-    selectedChampions.length !== championIds.length ||
-    selectedChampions.length === 0
-  ) {
+  if(!guide){
 
     notFound();
 
@@ -50,12 +60,20 @@ export default async function TeamPage({
 
 
 
+  const championIds = [
 
-  const teamResources =
-    resources.filter(
-      () => false
+    guide.primaryChampion,
+
+    guide.secondaryChampion
+
+  ].filter(Boolean) as string[];
+
+
+
+  const selectedChampions =
+    champions.filter(champion =>
+      championIds.includes(champion.id)
     );
-
 
 
 
@@ -67,19 +85,18 @@ export default async function TeamPage({
       <TeamHeader
 
         team={{
-          id,
 
-          champions:
-            championIds,
+          id:guide.id,
 
-          resources:
-            []
+          title:guide.title,
+
+          champions:championIds,
+
+          resources:[]
 
         }}
 
-        champions={
-          selectedChampions
-        }
+        champions={selectedChampions}
 
       />
 
@@ -88,7 +105,7 @@ export default async function TeamPage({
       <ResourceSection
 
         resources={
-          teamResources
+          guide.resources
         }
 
       />
