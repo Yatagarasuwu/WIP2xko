@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ResourceType {
+  combo
+  mixup
+  oki
+  pressure
+  neutral
+}
+
+enum VideoType {
+  youtube
+  twitter
+}
+
+model Guide {
+  id                String      @id @default(cuid())
+  title             String
+
+  primaryChampion   String
+  secondaryChampion String?
+
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  resources         Resource[]
+}
+
+model Resource {
+  id          String        @id @default(cuid())
+
+  guideId     String
+  guide       Guide         @relation(fields: [guideId], references: [id], onDelete: Cascade)
+
+  title       String
+  type        ResourceType
+
+  description String
+
+  order       Int
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  videos      Video[]
+}
+
+model Video {
+  id          String      @id @default(cuid())
+
+  resourceId  String
+  resource    Resource    @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+
+  type        VideoType
+
+  url         String
+
+  title       String?
+  description String?
+
+  startTime   Int?
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  links       VideoLink[]
+}
+
+model VideoLink {
+  id               String   @id @default(cuid())
+
+  videoId          String
+  video            Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  targetResourceId String
+
+  label            String
+}

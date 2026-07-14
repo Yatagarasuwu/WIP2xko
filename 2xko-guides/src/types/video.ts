@@ -1,11 +1,34 @@
-export type VideoType = "youtube" | "mp4" | "twitter";
+export type VideoType =
+  | "youtube"
+  | "twitter";
+
+
+export type VideoLink = {
+
+  id:string;
+
+  label:string;
+
+  targetResourceId:string;
+
+};
+
+
 
 export type Video = {
-  id: string;
-  type: VideoType;
-  url: string;
 
-  // optional features
-  title?: string;
-  startTime?: number; // seconds
+  id:string;
+
+  type:VideoType;
+
+  url:string;
+
+  title?:string;
+
+  description?:string;
+
+  startTime?:number;
+
+  links:VideoLink[];
+
 };

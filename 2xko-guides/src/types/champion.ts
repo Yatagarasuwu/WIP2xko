@@ -1,4 +1,3 @@
-
 export type CharacterId =
   | "ahri"
   | "akali"
@@ -16,8 +15,14 @@ export type CharacterId =
   | "warwick"
   | "yasuo";
 
-export interface Champion {
+
+
+export type Champion = {
+
   id: CharacterId;
-  name: string;
-  image: string;
-}
+
+  name:string;
+
+  image:string;
+
+};

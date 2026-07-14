@@ -1,22 +1,29 @@
+import { Video } from "./video";
+
+
 export type ResourceType =
   | "combo"
   | "mixup"
   | "oki"
-  | "neutral"
   | "pressure"
-  | "punish";
+  | "neutral";
 
-export type Video = {
-  url: string;
-  label?: string;
-};
+
 
 export type Resource = {
-  id: string;
-  title: string;
-  championId: string;
-  type: ResourceType;
-  tags: string[];
-  description?: string;
-  videos: Video[];
+
+  id:string;
+
+  title:string;
+
+  championId:string;
+
+  type:ResourceType;
+
+  description:string;
+
+  tags:string[];
+
+  videos:Video[];
+
 };

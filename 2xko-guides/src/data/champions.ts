@@ -17,19 +17,19 @@ import { Champion } from "@/types/champion";
 // import yasuo from "@/app/champions/yasuo.png";
 
 export const champions: Champion[] = [
-  { id: "ekko", name: "Ekko", image: "ekko.png" },
-  { id: "ahri", name: "Ahri", image: "ahri.png" },
-  { id: "jinx", name: "Jinx", image: "jinx.png" },
-  { id: "yasuo", name: "Yasuo", image: "yasuo.png" },
-  { id: "darius", name: "Darius", image: "darius.png" },
-  { id: "warwick", name: "Warwick", image: "warwick.png" },
-  { id: "blitzcrank", name: "Blitzcrank", image: "blitzcrank.png" },
-  { id: "senna", name: "Senna", image: "senna.png" },
-  { id: "thresh", name: "Thresh", image: "thresh.png" },
-  { id: "caitlyn", name: "Caitlyn", image: "caitlyn.png" },
-  { id: "vi", name: "Vi", image: "vi.png" },
-  { id: "teemo", name: "Teemo", image: "teemo.png" },
-  { id: "illaoi", name: "Illaoi", image: "illaoi.png" },
-  { id: "akali", name: "Akali", image: "akali.png" },
-  { id: "braum", name: "Braum", image: "braum.png" }
+  { id: "ekko", name: "Ekko", image: "/champions/ekko.png" },
+  { id: "ahri", name: "Ahri", image: "/champions/ahri.png" },
+  { id: "jinx", name: "Jinx", image: "/champions/jinx.png" },
+  { id: "yasuo", name: "Yasuo", image: "/champions/yasuo.png" },
+  { id: "darius", name: "Darius", image: "/champions/darius.png" },
+  { id: "warwick", name: "Warwick", image: "/champions/warwick.png" },
+  { id: "blitzcrank", name: "Blitzcrank", image: "/champions/blitzcrank.png" },
+  { id: "senna", name: "Senna", image: "/champions/senna.png" },
+  { id: "thresh", name: "Thresh", image: "/champions/thresh.png" },
+  { id: "caitlyn", name: "Caitlyn", image: "/champions/caitlyn.png" },
+  { id: "vi", name: "Vi", image: "/champions/vi.png" },
+  { id: "teemo", name: "Teemo", image: "/champions/teemo.png" },
+  { id: "illaoi", name: "Illaoi", image: "/champions/illaoi.png" },
+  { id: "akali", name: "Akali", image: "/champions/akali.png" },
+  { id: "braum", name: "Braum", image: "/champions/braum.png" }
 ];

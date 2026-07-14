@@ -1,37 +1,114 @@
-export default function ResourceFilters({
-  filters,
-  setFilters,
-}: any) {
-  return (
-    <div className="flex gap-2 flex-wrap mb-4">
-      <input
-        placeholder="Search..."
-        className="border p-1 text-sm"
-        onChange={(e) =>
-          setFilters((f: any) => ({
-            ...f,
-            search: e.target.value,
-          }))
-        }
-      />
+"use client";
 
-      <select
-        onChange={(e) =>
-          setFilters((f: any) => ({
-            ...f,
-            type: e.target.value || undefined,
-          }))
-        }
-        className="border p-1 text-sm"
-      >
-        <option value="">All Types</option>
-        <option value="combo">Combo</option>
-        <option value="mixup">Mixup</option>
-        <option value="oki">Oki</option>
-        <option value="neutral">Neutral</option>
-        <option value="pressure">Pressure</option>
-        <option value="punish">Punish</option>
-      </select>
+import { ResourceType } from "@/types/resource";
+
+
+type FilterType =
+  | "all"
+  | ResourceType;
+
+
+type Props = {
+  selected: FilterType;
+
+  onChange: (type: FilterType) => void;
+};
+
+
+
+export default function ResourceFilters({
+  selected,
+  onChange,
+}: Props) {
+
+
+  const filters: {
+    label:string;
+    value:FilterType;
+  }[] = [
+
+    {
+      label:"All",
+      value:"all"
+    },
+
+    {
+      label:"Combos",
+      value:"combo"
+    },
+
+    {
+      label:"Mixups",
+      value:"mixup"
+    },
+
+    {
+      label:"Okizeme",
+      value:"oki"
+    },
+
+    {
+      label:"Pressure",
+      value:"pressure"
+    },
+
+    {
+      label:"Neutral",
+      value:"neutral"
+    },
+
+    
+
+  ];
+
+
+
+  return (
+
+    <div
+      className="
+      flex
+      gap-2
+      flex-wrap
+      "
+    >
+
+      {filters.map((filter)=>(
+
+        <button
+
+          key={filter.value}
+
+          onClick={()=>
+            onChange(filter.value)
+          }
+
+          className={`
+            px-3
+            py-1
+            rounded-full
+            border
+
+            ${
+              selected === filter.value
+              ?
+              "bg-blue-600 border-blue-600"
+              :
+              "border-zinc-700"
+            }
+          `}
+
+        >
+
+          {filter.label}
+
+        </button>
+
+      ))}
+
+
     </div>
+
   );
-}
+
+}   

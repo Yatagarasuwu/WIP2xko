@@ -1,157 +1,191 @@
-# 2XKO Guides — Product Plan
+# 2XKO Guides MVP Plan
 
-This project is a structured learning + resource system for fighting game teams (2v2 format).  
-Users can select champions, build “boards” (teams), and browse curated combo / mixup / okizeme resources with video support.
+## Vision
 
----
+A website that lets fighting game players organize and share their team's combos, mixups, and setups.
 
-# 🧭 Core Vision
+The goal is to solve:
 
-Turn fighting game knowledge into:
+"Someone asked me for resources on this team, and I have to dig through old files, Discord messages, and videos."
 
-- searchable resources
-- team-based boards
-- video-driven explanations
-- shareable setups between players
+A player should be able to send one link containing everything important about their team.
 
 ---
 
-# 🏗 Architecture Principles
+# Core Product
 
-- Data lives in `/data`
-- Types live in `/types`
-- Logic lives in `/hooks` and `/lib`
-- UI lives in `/components`
-- Pages only compose components
-- No business logic in pages
+A Team Guide contains:
 
----
+- Team name
+- Two champions
+- Organized resources
+- Videos
+- Notes
 
-# 📌 MVP Milestones
+Example:
 
-## Phase 1 — Foundation (DONE / IN PROGRESS)
-- Project structure setup
-- Champion system
-- Selection hook
-- Basic homepage
+Ekko + Ahri Guide
 
----
+Contains:
 
-## Phase 2 — UI Component System
-Break UI into reusable components:
-
-- ChampionCard
-- ChampionGrid
-- SelectedChampions
-- TeamSidebar
-- OpenGuideButton
-- Shared UI primitives (Button, Card, Modal)
-
-Goal: page.tsx becomes a composition layer only.
+- Combos
+- Mixups
+- Oki
+- Pressure
+- Neutral
+- Punishes
 
 ---
 
-## Phase 3 — Resource System (Core Feature)
+# MVP Features
 
-Build the fighting game knowledge system:
+## Completed
 
-- Resource types:
-  - combo
-  - mixup
-  - oki
-  - neutral
-  - pressure
-  - punish
+- Next.js setup
+- Champion selection system
+- Basic component system
+- Resource data model
+- Video component foundation
+
+
+---
+
+# Phase 1 — Team Guide Pages
+
+Goal:
+
+Display a complete team guide.
 
 Features:
-- filter by champion
-- filter by tags
-- filter by type
-- search resources
-- attach multiple videos per resource
+
+- View a team
+- Display champions
+- Display resources
+- Display videos
+
+Example route:
+
+/teams/ekko-ahri
+
 
 ---
 
-## Phase 4 — Video System
+# Phase 2 — Resource System
 
-Support multiple video sources:
+Resources are the main content.
 
-- YouTube embeds
-- MP4 playback
-- Twitter/X embeds
+Resource types:
+
+- Combo
+- Mixup
+- Oki
+- Pressure
+- Neutral
+- Punish
+
+
+Each resource contains:
+
+- Title
+- Champion
+- Description
+- Tags
+- Videos
+
+
+Example:
+
+Ekko Corner Combo
+
+Type:
+Combo
+
+Videos:
+- YouTube
+- MP4
+- Twitter/X
+
+
+---
+
+# Phase 3 — Resource Management
+
+Make adding resources easier.
 
 Features:
-- unified VideoPlayer component
-- timestamp support
-- autoplay toggle (optional later)
+
+- Create resource
+- Edit resource
+- Delete resource
+- Attach videos
+
+
+Route:
+
+/resources/create
+
 
 ---
 
-## Phase 5 — Boards System (CORE PRODUCT FEATURE)
+# Phase 4 — Team Creation
 
-Boards = team-based knowledge collections.
-
-Each board contains:
-- title
-- description
-- team (2 champions)
-- resources
-- notes (later)
-- public/private toggle
+Allow users to create guides.
 
 Features:
-- create board
-- view board
-- edit board
-- share board URL
-- duplicate board
+
+- Choose two champions
+- Name team
+- Add resources
+- Generate guide page
+
+
+Route:
+
+/teams/create
+
 
 ---
 
-## Phase 6 — Search + Filtering System
+# Phase 5 — Persistence
 
-Global resource discovery:
+Replace local data.
 
-- search bar
-- tag filtering
-- type filtering
-- champion filtering
-- combined filters
+Use:
 
----
+- Supabase
 
-## Phase 7 — Persistence Layer
 
-Replace mock data with backend:
+Add:
 
-- Supabase (recommended)
-- or Firebase alternative
+- Accounts
+- Saved teams
+- Public guides
 
-Features:
-- save boards
-- save resources
-- user accounts
 
 ---
 
-## Phase 8 — Social Layer
+# Future Features
 
-- user profiles
-- public boards
-- likes/favorites
-- comments
-- shared meta builds
+Not MVP:
+
+- Likes
+- Comments
+- Profiles
+- Meta rankings
+- Discord integration
+- Community submissions
+- Team recommendations
+
 
 ---
 
-# 🧠 Long Term Vision
+# Development Rule
 
-This becomes:
+Do not build features before the core loop works:
 
-> “Liquipedia for fighting game team combos + coaching tool”
+1. Create team
+2. Add resources
+3. View team page
+4. Share link
 
-with:
-- curated setups
-- matchup knowledge
-- duo synergy exploration
-- community boards
+Everything supports this loop.
