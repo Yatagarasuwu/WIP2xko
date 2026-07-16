@@ -10,7 +10,11 @@ type Props = {
 
   allResources: Resource[];
 
-   clearFilter: () => void;
+  goToResource: (
+    id:string
+  )=>void;
+
+ 
 
 };
 
@@ -22,7 +26,9 @@ export default function VideoLinks({
 
   allResources,
 
-  clearFilter,
+  goToResource,
+
+ 
 
 }: Props) {
 
@@ -40,35 +46,10 @@ export default function VideoLinks({
 
 function jumpToResource(id:string){
 
-  clearFilter();
+ 
+   goToResource(id);
 
-
-  setTimeout(()=>{
-
-
-    const element =
-      document.getElementById(
-        `resource-${id}`
-      );
-
-
-    if(element){
-
-      element.scrollIntoView({
-
-        behavior:"smooth",
-
-        block:"start"
-
-      });
-
-    }
-
-
-  },150);
-
-
-} 
+}
 
 
 

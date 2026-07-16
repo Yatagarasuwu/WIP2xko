@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import ResourceFilters from "@/components/resources/ResourceFilters";
 import ResourceForm from "@/components/resources/ResourceForm";
@@ -24,6 +25,12 @@ export default function ResourceSection({
 }) {
 
 
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+
+
+
   const [showForm, setShowForm] =
     useState(false);
 
@@ -44,6 +51,151 @@ export default function ResourceSection({
 
 
 
+  const [highlightedResource, setHighlightedResource] =
+    useState<string | null>(null);
+
+
+
+
+
+  function goToResource(resourceId:string){
+
+    const target =
+      resourceList.find(
+        resource =>
+          resource.id === resourceId
+      );
+
+
+    if(!target){
+      return;
+    }
+
+
+    setFilter(target.type);
+
+
+
+    const params =
+      new URLSearchParams(
+        searchParams.toString()
+      );
+
+
+    params.set(
+      "resource",
+      resourceId
+    );
+
+
+    router.push(
+      `?${params.toString()}`,
+      {
+        scroll:false
+      }
+    );
+
+
+
+    setTimeout(() => {
+
+      const element =
+        document.getElementById(
+          `resource-${resourceId}`
+        );
+
+
+      if(element){
+
+        element.scrollIntoView({
+          behavior:"smooth",
+          block:"start"
+        });
+
+
+        setHighlightedResource(resourceId);
+
+
+        setTimeout(() => {
+
+          setHighlightedResource(null);
+
+        },2000);
+
+      }
+
+    },100);
+
+  }
+
+
+
+
+
+
+  useEffect(() => {
+
+    const resourceId =
+      searchParams.get("resource");
+
+
+    if(!resourceId){
+      return;
+    }
+
+
+    const target =
+      resourceList.find(
+        resource =>
+          resource.id === resourceId
+      );
+
+
+    if(!target){
+      return;
+    }
+
+
+    setFilter(target.type);
+
+
+
+    setTimeout(() => {
+
+      const element =
+        document.getElementById(
+          `resource-${resourceId}`
+        );
+
+
+      if(element){
+
+        element.scrollIntoView({
+          behavior:"smooth",
+          block:"start"
+        });
+
+
+        setHighlightedResource(resourceId);
+
+
+        setTimeout(() => {
+
+          setHighlightedResource(null);
+
+        },2000);
+
+      }
+
+    },200);
+
+
+  }, []);
+
+
+
+
+
 
 
   async function addResource(resource: Resource) {
@@ -52,6 +204,8 @@ export default function ResourceSection({
     "RESOURCE SECTION RECEIVED",
     JSON.stringify(resource, null, 2)
   ); 
+
+
   const response =
     await fetch("/api/resources", {
 
@@ -99,6 +253,7 @@ export default function ResourceSection({
     });
 
 
+
   const saved =
     await response.json();
 
@@ -115,6 +270,8 @@ export default function ResourceSection({
   setShowForm(false);
 
 }
+
+
 
 
 
@@ -145,11 +302,15 @@ export default function ResourceSection({
 
 
 
+
+
   function startEditing(resource:Resource){
 
     setEditingResource(resource);
 
   }
+
+
 
 
 
@@ -236,6 +397,8 @@ async function saveEdit(resource:Resource){
 
 
 
+
+
   function moveResource(
     index:number,
     direction:"up"|"down"
@@ -284,11 +447,18 @@ async function saveEdit(resource:Resource){
 
 
 
+
+
+
+
 function clearFilter(){
 
   setFilter("all");
 
 }
+
+
+
 
 
 
@@ -354,18 +524,17 @@ function clearFilter(){
 
 
 
-
       {showForm && (
 
         <ResourceForm
 
-  guideId={guideId}
+          guideId={guideId}
 
-  onSave={addResource}
+          onSave={addResource}
 
-  availableResources={resourceList}
+          availableResources={resourceList}
 
-/>
+        />
 
       )}
 
@@ -389,25 +558,27 @@ function clearFilter(){
 
 
 
-    <TeamResourceList
+   <TeamResourceList
 
-  resources={filteredResources}
+      resources={filteredResources}
 
-  allResources={resourceList}
+      allResources={resourceList}
 
-  clearFilter={clearFilter}
+      goToResource={goToResource}
 
-  onEdit={startEditing}
+      onEdit={startEditing}
 
-  onDelete={deleteResource}
+      onDelete={deleteResource}
 
-  onMove={moveResource}
+      onMove={moveResource}
 
-  editingResource={editingResource}
+      editingResource={editingResource}
 
-  onSaveEdit={saveEdit}
+      onSaveEdit={saveEdit}
 
-/>
+      highlightedResource={highlightedResource}
+
+   />
 
 
 

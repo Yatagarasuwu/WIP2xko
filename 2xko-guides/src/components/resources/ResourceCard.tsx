@@ -32,7 +32,11 @@ type Props = {
     resource: Resource
   ) => void;
 
-   clearFilter: () => void;
+ goToResource: (
+  id:string
+)=>void;
+
+highlightedResource:string | null;
 
 };
 
@@ -42,6 +46,8 @@ export default function ResourceCard({
   resource,
 
   allResources,
+
+  goToResource,
 
   index,
 
@@ -54,8 +60,11 @@ export default function ResourceCard({
   editingResource,
 
   onSaveEdit,
+  
+  highlightedResource,
 
-   clearFilter,
+  
+ 
 
 }: Props) {
 
@@ -124,29 +133,29 @@ export default function ResourceCard({
 
     <div
 
-      id={`resource-${resource.id}`}
+id={`resource-${resource.id}`}
 
-      className={`
+className={`
+rounded-xl
+border
+border-zinc-700
+border-l-4
+${colors.border}
+bg-zinc-900
+p-6
+space-y-6
+shadow-sm
+transition-all
+duration-500
 
-      rounded-xl
+${
+  highlightedResource === resource.id
+  ? "ring-2 ring-blue-500 shadow-lg shadow-blue-500/20"
+  : ""
+}
 
-      border
-
-      border-zinc-700
-
-      border-l-4
-
-      ${colors.border}
-
-      bg-zinc-900
-
-      overflow-hidden
-
-      shadow-sm
-
-      `}
-
-    >
+`}
+>
 
 
       {
@@ -294,7 +303,11 @@ export default function ResourceCard({
                       allResources
                     }
 
- clearFilter={clearFilter}
+                    goToResource={
+    goToResource
+  }
+                      
+ 
                   />
 
 

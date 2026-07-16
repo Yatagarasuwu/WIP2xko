@@ -6,34 +6,36 @@ import { Resource } from "@/types/resource";
 type Props = {
 
   resources: Resource[];
-   allResources: Resource[];
 
-  clearFilter: () => void;
+  allResources: Resource[];
+  
+ 
 
   onEdit: (
     resource: Resource
   ) => void;
 
-
   onDelete: (
     id:string
   ) => void;
-
 
   onMove: (
     index:number,
     direction:"up"|"down"
   ) => void;
 
-
   editingResource: Resource | null;
-
 
   onSaveEdit: (
     resource:Resource
   ) => void;
 
-  
+  goToResource: (
+  id:string
+)=>void;
+
+ highlightedResource:string | null;
+
 
 };
 
@@ -45,6 +47,8 @@ export default function TeamResourceList({
 
   resources,
 
+  allResources,
+
   onEdit,
 
   onDelete,
@@ -55,10 +59,10 @@ export default function TeamResourceList({
 
   onSaveEdit,
 
-   clearFilter,
+  goToResource,
 
+ highlightedResource,
 }:Props){
-
 
 
   if(resources.length === 0){
@@ -96,7 +100,7 @@ export default function TeamResourceList({
 
             resource={resource}
 
-            allResources={resources}
+            allResources={allResources}
 
             index={index}
 
@@ -110,7 +114,12 @@ export default function TeamResourceList({
 
             onSaveEdit={onSaveEdit}
 
-            clearFilter={clearFilter}
+              goToResource={goToResource}
+
+                highlightedResource={highlightedResource}
+
+
+    
 
           />
 

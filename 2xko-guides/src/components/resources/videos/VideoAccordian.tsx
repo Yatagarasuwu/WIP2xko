@@ -17,7 +17,9 @@ type Props = {
 
   allResources: Resource[];
 
-   clearFilter: () => void;
+     goToResource: (
+    id:string
+  )=>void;
 
 };
 
@@ -28,8 +30,7 @@ export default function VideoAccordion({
   videos,
 
   allResources,
-
-  clearFilter,
+  goToResource,
 
 }: Props) {
 
@@ -396,8 +397,11 @@ export default function VideoAccordion({
                       links={video.links}
 
                       allResources={allResources}
-                      
-                       clearFilter={clearFilter}
+
+                        goToResource={goToResource}
+
+
+                    
 
                     />
 
