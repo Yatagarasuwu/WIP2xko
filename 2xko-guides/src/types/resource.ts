@@ -1,29 +1,27 @@
 import { Video } from "./video";
 
-
 export type ResourceType =
   | "combo"
   | "mixup"
   | "oki"
   | "pressure"
-  | "neutral";
-
-
+  | "neutral"
+  | "flash";
 
 export type Resource = {
 
-  id:string;
+  id: string;
 
-  title:string;
+  guideId: string;
 
-  championId:string;
+  title: string;
 
-  type:ResourceType;
+  type: ResourceType;
 
-  description:string;
+  description: string;
 
-  tags:string[];
+  order: number;
 
-  videos:Video[];
+  videos: Video[];
 
 };

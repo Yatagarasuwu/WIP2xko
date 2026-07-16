@@ -57,6 +57,11 @@ export default function ResourceFilters({
       value:"neutral"
     },
 
+    {
+      label:"Tag Flash",
+      value:"flash"
+    },
+
     
 
   ];

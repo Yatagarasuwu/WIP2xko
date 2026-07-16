@@ -1,8 +1,21 @@
 import Link from "next/link";
 
-import { teams } from "@/data/teams";
+import { prisma } from "@/lib/prisma";
 
-export default function Home() {
+export default async function Home() {
+
+  const guides =
+    await prisma.guide.findMany({
+
+      include: {
+        resources: true,
+      },
+
+      orderBy: {
+        createdAt: "desc",
+      },
+
+    });
 
   return (
 
@@ -49,8 +62,6 @@ export default function Home() {
 
       </section>
 
-
-
       <section className="space-y-4">
 
         <h2 className="text-2xl font-bold">
@@ -59,15 +70,29 @@ export default function Home() {
 
         </h2>
 
+        {
+
+          guides.length === 0 && (
+
+            <p className="text-zinc-500">
+
+              No guides created yet.
+
+            </p>
+
+          )
+
+        }
+
         <div className="grid gap-4">
 
-          {teams.map(team => (
+          {guides.map((guide) => (
 
             <Link
 
-              key={team.id}
+              key={guide.id}
 
-              href={`/teams/${team.id}`}
+              href={`/teams/${guide.id}`}
 
               className="
               rounded-xl
@@ -83,19 +108,27 @@ export default function Home() {
 
               <h3 className="text-xl font-semibold">
 
-                {team.title ?? team.champions.join(" + ")}
+                {guide.title}
 
               </h3>
 
               <p className="mt-2 text-zinc-400">
 
-                {team.champions.join(" + ")}
+                {
+
+                  guide.secondaryChampion
+
+                    ? `${guide.primaryChampion} + ${guide.secondaryChampion}`
+
+                    : guide.primaryChampion
+
+                }
 
               </p>
 
               <p className="mt-4 text-sm text-zinc-500">
 
-                {team.resources.length} resources
+                {guide.resources.length} resources
 
               </p>
 

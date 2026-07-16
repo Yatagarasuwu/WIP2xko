@@ -6,6 +6,9 @@ import { Resource } from "@/types/resource";
 type Props = {
 
   resources: Resource[];
+   allResources: Resource[];
+
+  clearFilter: () => void;
 
   onEdit: (
     resource: Resource
@@ -30,6 +33,8 @@ type Props = {
     resource:Resource
   ) => void;
 
+  
+
 };
 
 
@@ -49,6 +54,8 @@ export default function TeamResourceList({
   editingResource,
 
   onSaveEdit,
+
+   clearFilter,
 
 }:Props){
 
@@ -102,6 +109,8 @@ export default function TeamResourceList({
             editingResource={editingResource}
 
             onSaveEdit={onSaveEdit}
+
+            clearFilter={clearFilter}
 
           />
 

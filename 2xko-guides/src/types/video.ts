@@ -1,34 +1,35 @@
 export type VideoType =
   | "youtube"
-  | "twitter";
-
+  | "twitter"
+  | "medal";
 
 export type VideoLink = {
 
-  id:string;
+  id: string;
 
-  label:string;
+  label: string;
 
-  targetResourceId:string;
+  targetResourceId: string;
 
 };
 
 
-
 export type Video = {
 
-  id:string;
+  id: string;
 
-  type:VideoType;
+  resourceId: string;
 
-  url:string;
+  type: VideoType;
 
-  title?:string;
+  url: string;
 
-  description?:string;
+  title: string | null;
 
-  startTime?:number;
+  description: string | null;
 
-  links:VideoLink[];
+  startTime: number | null;
+
+  links: VideoLink[];
 
 };

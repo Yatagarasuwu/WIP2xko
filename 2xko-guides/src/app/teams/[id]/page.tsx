@@ -102,13 +102,13 @@ export default async function TeamPage({
 
 
 
-      <ResourceSection
+     <ResourceSection
 
-        resources={
-          guide.resources
-        }
+  guideId={guide.id}
 
-      />
+  resources={guide.resources}
+
+/>
 
 
     </main>

@@ -13,11 +13,13 @@ enum ResourceType {
   oki
   pressure
   neutral
+  flash
 }
 
 enum VideoType {
   youtube
   twitter
+  medal
 }
 
 model Guide {

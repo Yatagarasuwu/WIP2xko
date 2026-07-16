@@ -10,6 +10,8 @@ import VideoLinkEditor from "@/components/resources/videos/VideoLinkEditor";
 
 type Props = {
 
+  guideId: string;
+
   onSave:(resource:Resource)=>void;
 
   initialResource?:Resource;
@@ -41,13 +43,15 @@ type VideoInput = {
 
 export default function ResourceForm({
 
+  guideId,
+
   onSave,
 
   initialResource,
 
   availableResources,
 
-}:Props){
+}: Props) {
 
 
 
@@ -233,110 +237,71 @@ export default function ResourceForm({
 
 
 
-  function save(){
+ function save() {
 
+  const resource: Resource = {
 
-    const resource:Resource = {
+    id:
+      initialResource?.id ??
+      crypto.randomUUID(),
 
+    guideId,
 
-      id:
+    title,
 
-        initialResource?.id ??
+    type,
 
-        crypto.randomUUID(),
+    description,
 
+    order:
+      initialResource?.order ??
+      0,
 
+    videos:
 
-      title,
+      videos
 
+      .filter(
+        video =>
+        video.url.trim() !== ""
+      )
 
+      .map(video => ({
 
-      championId:
+        id:
+          video.id ??
+          crypto.randomUUID(),
 
-        initialResource?.championId ??
+        resourceId:
+          initialResource?.id ??
+          "",
 
-        "",
+        type:
+          video.type,
 
+        url:
+          video.url,
 
+        title:
+          video.title || null,
 
-      type,
+        description:
+          video.description || null,
 
+        startTime:
+          null,
 
+        links:
+          video.links,
 
-      description,
+      }))
 
+  };
 
 
-      tags:
+  onSave(resource);
 
-        initialResource?.tags ??
-
-        [],
-
-
-
-      videos:
-
-
-        videos
-
-        .filter(
-          video =>
-          video.url.trim() !== ""
-        )
-
-
-        .map(video => ({
-
-
-          id:
-
-            video.id ??
-
-            crypto.randomUUID(),
-
-
-
-          type:
-
-            video.type,
-
-
-
-          url:
-
-            video.url,
-
-
-
-          title:
-
-            video.title,
-
-
-
-          description:
-
-            video.description,
-
-
-
-          links:
-
-            video.links,
-
-
-        }))
-
-
-    };
-
-
-
-    onSave(resource);
-
-
-  }
+}
 
 
 
@@ -444,6 +409,10 @@ export default function ResourceForm({
           Neutral
         </option>
 
+        <option value="flash">
+          Tag Flash
+        </option>
+
         
 
       </select>
@@ -546,8 +515,12 @@ export default function ResourceForm({
                 </option>
 
                 <option value="twitter">
-                  Twitter/X
+                  Twitter
                 </option>
+
+                <option value="medal">
+  Medal
+</option>
 
     
 

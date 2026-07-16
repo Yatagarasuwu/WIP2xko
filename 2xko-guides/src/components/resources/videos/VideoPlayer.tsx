@@ -1,3 +1,5 @@
+import { Tweet } from "react-tweet";
+
 import { Video } from "@/types/video";
 
 
@@ -15,8 +17,7 @@ export default function VideoPlayer({
 
     try {
 
-      const parsed =
-        new URL(url);
+      const parsed = new URL(url);
 
 
       if(parsed.hostname.includes("youtu.be")){
@@ -39,6 +40,70 @@ export default function VideoPlayer({
 
 
 
+  function getTweetId(url:string){
+
+    try {
+
+      const parsed = new URL(url);
+
+      const parts =
+        parsed.pathname.split("/");
+
+
+      const statusIndex =
+        parts.indexOf("status");
+
+
+      if(statusIndex === -1){
+
+        return null;
+
+      }
+
+
+      return parts[statusIndex + 1];
+
+    }
+    catch {
+
+      return null;
+
+    }
+
+  }
+
+
+
+
+  function getMedalId(url:string){
+
+    try {
+
+      const parsed =
+        new URL(url);
+
+
+      const match =
+        parsed.pathname.match(
+          /clips\/([^/]+)/
+        );
+
+
+      return match?.[1] ?? null;
+
+    }
+    catch {
+
+      return null;
+
+    }
+
+  }
+
+
+
+
+
   if(video.type === "youtube") {
 
 
@@ -50,18 +115,14 @@ export default function VideoPlayer({
     if(!id){
 
       return (
-
         <div className="
           border
           border-red-500
           p-3
           rounded
         ">
-
           Invalid YouTube URL
-
         </div>
-
       );
 
     }
@@ -76,40 +137,39 @@ export default function VideoPlayer({
         {video.title && (
 
           <h4 className="font-semibold">
-
             {video.title}
-
           </h4>
 
         )}
 
 
 
-       <div className="
-aspect-video
-max-w-2xl
-">
+        <div className="
+          aspect-video
+          w-full
+          max-w-xl
+          mx-auto
+        ">
 
           <iframe
 
             className="
-w-full
-h-full
-rounded-lg
-border
-border-zinc-800
-"
+              w-full
+              h-full
+              rounded-lg
+              border
+              border-zinc-800
+              shadow-lg
+            "
 
             src={
               `https://www.youtube.com/embed/${id}`
             }
 
-
             title={
               video.title ??
               "YouTube video"
             }
-
 
             allowFullScreen
 
@@ -127,50 +187,43 @@ border-zinc-800
 
 
 
-  if(video.type === "mp4"){
+
+
+  if(video.type === "twitter") {
+
+
+    const tweetId =
+      getTweetId(video.url);
+
+
+
+    if(!tweetId){
+
+      return (
+
+        <div className="
+          border
+          border-red-500
+          p-3
+          rounded
+        ">
+          Invalid Twitter URL
+        </div>
+
+      );
+
+    }
+
 
 
     return (
 
-      <div className="space-y-2">
+      <div className="
+        max-w-xl
+        mx-auto
+      ">
 
-
-        {video.title && (
-
-          <h4 className="font-semibold">
-
-            {video.title}
-
-          </h4>
-
-        )}
-
-
-
-        <video
-
-          controls
-
-          className="
-          w-full
-          rounded-lg
-          "
-
-        >
-
-          <source
-
-            src={video.url}
-
-            type="video/mp4"
-
-          />
-
-
-          Your browser does not support video.
-
-        </video>
-
+        <Tweet id={tweetId} />
 
       </div>
 
@@ -182,62 +235,66 @@ border-zinc-800
 
 
 
-  if(video.type === "twitter"){
+
+  if(video.type === "medal") {
+
+
+    const medalId =
+      getMedalId(video.url);
+
+
+
+    if(!medalId){
+
+      return (
+
+        <div className="
+          border
+          border-red-500
+          p-3
+          rounded
+        ">
+          Invalid Medal URL
+        </div>
+
+      );
+
+    }
+
 
 
     return (
 
-      <div
+      <div className="
+        aspect-video
+        w-full
+        max-w-xl
+        mx-auto
+      ">
 
-        className="
-        border
-        border-zinc-800
-        rounded-lg
-        p-4
-        space-y-2
-        "
-
-      >
-
-        {video.title && (
-
-          <h4 className="font-semibold">
-
-            {video.title}
-
-          </h4>
-
-        )}
-
-
-
-        <p className="text-sm text-zinc-400">
-
-          Twitter/X video
-
-        </p>
-
-
-
-        <a
-
-          href={video.url}
-
-          target="_blank"
-
-          rel="noopener noreferrer"
+        <iframe
 
           className="
-          text-blue-400
-          underline
+            w-full
+            h-full
+            rounded-lg
+            border
+            border-zinc-800
+            shadow-lg
           "
 
-        >
+          src={
+            `https://medal.tv/clip/${medalId}`
+          }
 
-          Open Tweet
+          title={
+            video.title ??
+            "Medal clip"
+          }
 
-        </a>
+          allowFullScreen
 
+        />
 
       </div>
 
@@ -248,6 +305,20 @@ border-zinc-800
 
 
 
-  return null;
+
+  return (
+
+    <div className="
+      border
+      border-zinc-700
+      p-3
+      rounded
+    ">
+
+      Unsupported video type
+
+    </div>
+
+  );
 
 }

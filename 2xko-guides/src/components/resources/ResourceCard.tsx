@@ -32,7 +32,10 @@ type Props = {
     resource: Resource
   ) => void;
 
+   clearFilter: () => void;
+
 };
+
 
 export default function ResourceCard({
 
@@ -52,10 +55,15 @@ export default function ResourceCard({
 
   onSaveEdit,
 
+   clearFilter,
+
 }: Props) {
+
 
   const isEditing =
     editingResource?.id === resource.id;
+
+
 
   function getColors() {
 
@@ -91,6 +99,12 @@ export default function ResourceCard({
           badge: "bg-green-600",
         };
 
+      case "flash":
+        return {
+          border: "border-l-yellow-500",
+          badge: "bg-yellow-600",
+        };
+
       default:
         return {
           border: "border-l-zinc-600",
@@ -101,7 +115,10 @@ export default function ResourceCard({
 
   }
 
+
   const colors = getColors();
+
+
 
   return (
 
@@ -110,58 +127,81 @@ export default function ResourceCard({
       id={`resource-${resource.id}`}
 
       className={`
+
       rounded-xl
+
       border
+
       border-zinc-700
+
       border-l-4
+
       ${colors.border}
+
       bg-zinc-900
-      p-6
-      space-y-6
+
+      overflow-hidden
+
       shadow-sm
+
       `}
 
     >
+
 
       {
 
         isEditing ? (
 
-          <ResourceForm
+          <div className="p-4">
 
-            initialResource={
-              resource
-            }
+            <ResourceForm
 
-            onSave={
-              onSaveEdit
-            }
+              guideId={resource.guideId}
 
-            availableResources={
-              allResources
-            }
+              initialResource={resource}
 
-          />
+              onSave={onSaveEdit}
+
+              availableResources={allResources}
+
+            />
+
+          </div>
+
 
         ) : (
 
           <>
 
-            <div className="space-y-4">
+
+            <div className="p-4 space-y-3">
+
 
               <span
 
                 className={`
+
                 inline-flex
+
                 rounded-md
+
                 px-2
+
                 py-1
+
                 text-xs
+
                 font-bold
+
                 uppercase
+
                 tracking-wider
+
                 text-white
+
                 ${colors.badge}
+
                 `}
 
               >
@@ -170,38 +210,78 @@ export default function ResourceCard({
 
               </span>
 
+
+
               <div>
 
-                <h2 className="text-2xl font-bold">
 
-                  {resource.title}
+                <h2 className="
+
+                  mt-2
+
+                  text-xl
+
+                  font-bold
+
+                  text-white
+
+                ">
+
+                  {resource.title || "Untitled Resource"}
 
                 </h2>
 
-                <p className="
-                  mt-2
-                  text-zinc-400
-                  leading-relaxed
-                ">
 
-                  {resource.description}
 
-                </p>
+                {
+                  resource.description && (
+
+                    <p className="
+
+                      mt-2
+
+                      text-sm
+
+                      text-zinc-400
+
+                      leading-relaxed
+
+                    ">
+
+                      {resource.description}
+
+                    </p>
+
+                  )
+                }
+
 
               </div>
 
+
             </div>
+
+
+
 
             {
 
               resource.videos.length > 0 && (
 
                 <div
+
                   className="
+
                   border-t
-                  border-zinc-700
-                  pt-5
+
+                  border-zinc-800
+
+                  px-4
+
+                  py-4
+
                   "
+
                 >
 
                   <VideoAccordian
@@ -214,7 +294,9 @@ export default function ResourceCard({
                       allResources
                     }
 
+ clearFilter={clearFilter}
                   />
+
 
                 </div>
 
@@ -222,39 +304,67 @@ export default function ResourceCard({
 
             }
 
+
           </>
 
         )
 
       }
 
+
+
+
       <div
+
         className="
+
         border-t
-        border-zinc-700
-        pt-5
+
+        border-zinc-800
+
+        bg-zinc-900/40
+
+        px-4
+
+        py-3
+
         flex
+
         justify-between
+
         items-center
+
         "
+
       >
 
+
+
         <div className="flex gap-2">
+
 
           <button
 
             onClick={() =>
-              onMove(index, "up")
+              onMove(index,"up")
             }
 
             className="
+
+            h-8
+
+            w-8
+
             rounded-md
+
             border
+
             border-zinc-700
+
             bg-zinc-800
-            px-3
-            py-2
+
             hover:bg-zinc-700
+
             "
 
           >
@@ -263,20 +373,30 @@ export default function ResourceCard({
 
           </button>
 
+
+
           <button
 
             onClick={() =>
-              onMove(index, "down")
+              onMove(index,"down")
             }
 
             className="
+
+            h-8
+
+            w-8
+
             rounded-md
+
             border
+
             border-zinc-700
+
             bg-zinc-800
-            px-3
-            py-2
+
             hover:bg-zinc-700
+
             "
 
           >
@@ -285,9 +405,15 @@ export default function ResourceCard({
 
           </button>
 
+
         </div>
 
+
+
+
+
         <div className="flex gap-2">
+
 
           <button
 
@@ -296,12 +422,21 @@ export default function ResourceCard({
             }
 
             className="
+
             rounded-md
+
             bg-blue-600
-            px-4
-            py-2
+
+            px-3
+
+            py-1.5
+
+            text-sm
+
             font-medium
+
             hover:bg-blue-500
+
             "
 
           >
@@ -310,6 +445,9 @@ export default function ResourceCard({
 
           </button>
 
+
+
+
           <button
 
             onClick={() =>
@@ -317,12 +455,21 @@ export default function ResourceCard({
             }
 
             className="
+
             rounded-md
+
             bg-red-700
-            px-4
-            py-2
+
+            px-3
+
+            py-1.5
+
+            text-sm
+
             font-medium
+
             hover:bg-red-600
+
             "
 
           >
@@ -331,9 +478,12 @@ export default function ResourceCard({
 
           </button>
 
+
         </div>
 
+
       </div>
+
 
     </div>
 

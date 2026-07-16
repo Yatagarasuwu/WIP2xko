@@ -1,5 +1,6 @@
 import "./globals.css";
 
+import "react-tweet/theme.css";
 
 
 import Script from "next/script";

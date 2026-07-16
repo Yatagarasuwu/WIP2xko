@@ -10,9 +10,17 @@ import { Resource, ResourceType } from "@/types/resource";
 
 
 export default function ResourceSection({
+
+  guideId,
+
   resources,
+
 }: {
+
+  guideId: string;
+
   resources: Resource[];
+
 }) {
 
 
@@ -38,31 +46,100 @@ export default function ResourceSection({
 
 
 
-  function addResource(resource: Resource) {
+  async function addResource(resource: Resource) {
 
-    setResourceList(current => [
-      ...current,
-      resource
-    ]);
+    console.log(
+    "RESOURCE SECTION RECEIVED",
+    JSON.stringify(resource, null, 2)
+  ); 
+  const response =
+    await fetch("/api/resources", {
 
-    setShowForm(false);
+      method: "POST",
 
-  }
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+
+        guideId,
+
+        title: resource.title,
+
+        type: resource.type,
+
+        description: resource.description,
+
+
+        videos: resource.videos.map(video => ({
+
+          type: video.type,
+
+          url: video.url,
+
+          title: video.title ?? null,
+
+          description: video.description ?? null,
+
+
+          links: video.links.map(link => ({
+
+            label: link.label,
+
+            targetResourceId:
+              link.targetResourceId
+
+          }))
+
+        }))
+
+      })
+
+    });
+
+
+  const saved =
+    await response.json();
+
+
+  setResourceList(current => [
+
+    ...current,
+
+    saved
+
+  ]);
+
+
+  setShowForm(false);
+
+}
 
 
 
 
 
-  function deleteResource(id:string){
+  async function deleteResource(id:string){
 
-    setResourceList(current =>
-      current.filter(
-        resource =>
-          resource.id !== id
-      )
-    );
 
-  }
+  await fetch(
+    `/api/resources/${id}`,
+    {
+      method:"DELETE"
+    }
+  );
+
+
+  setResourceList(current =>
+    current.filter(
+      resource =>
+        resource.id !== id
+    )
+  );
+
+
+}
 
 
 
@@ -77,22 +154,83 @@ export default function ResourceSection({
 
 
 
+async function saveEdit(resource:Resource){
 
-  function saveEdit(resource:Resource){
 
-    setResourceList(current =>
-      current.map(oldResource =>
-        oldResource.id === resource.id
-        ? resource
-        : oldResource
-      )
+  const response =
+    await fetch(
+      `/api/resources/${resource.id}`,
+      {
+
+        method:"PUT",
+
+        headers:{
+          "Content-Type":"application/json"
+        },
+
+        body: JSON.stringify({
+
+  title: resource.title,
+
+  type: resource.type,
+
+  description: resource.description,
+
+
+  videos: resource.videos.map(video => ({
+
+    type: video.type,
+
+    url: video.url,
+
+    title: video.title ?? null,
+
+    description: video.description ?? null,
+
+
+    links: video.links.map(link => ({
+
+      label: link.label,
+
+      targetResourceId:
+        link.targetResourceId
+
+    }))
+
+  }))
+
+})
+
+      }
     );
 
 
-    setEditingResource(null);
 
-  }
+  const updated =
+    await response.json();
 
+
+
+  setResourceList(current =>
+
+    current.map(oldResource =>
+
+      oldResource.id === updated.id
+
+      ? updated
+
+      : oldResource
+
+    )
+
+  );
+
+
+
+  setEditingResource(null);
+
+
+}
 
 
 
@@ -146,7 +284,11 @@ export default function ResourceSection({
 
 
 
+function clearFilter(){
 
+  setFilter("all");
+
+}
 
 
 
@@ -217,13 +359,13 @@ export default function ResourceSection({
 
         <ResourceForm
 
-          onSave={addResource}
+  guideId={guideId}
 
-          availableResources={
-            resourceList
-          }
+  onSave={addResource}
 
-        />
+  availableResources={resourceList}
+
+/>
 
       )}
 
@@ -247,21 +389,25 @@ export default function ResourceSection({
 
 
 
-      <TeamResourceList
+    <TeamResourceList
 
-        resources={filteredResources}
+  resources={filteredResources}
 
-        onEdit={startEditing}
+  allResources={resourceList}
 
-        onDelete={deleteResource}
+  clearFilter={clearFilter}
 
-        onMove={moveResource}
+  onEdit={startEditing}
 
-        editingResource={editingResource}
+  onDelete={deleteResource}
 
-        onSaveEdit={saveEdit}
+  onMove={moveResource}
 
-      />
+  editingResource={editingResource}
+
+  onSaveEdit={saveEdit}
+
+/>
 
 
 
