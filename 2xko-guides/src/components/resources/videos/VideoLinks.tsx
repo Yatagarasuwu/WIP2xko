@@ -44,13 +44,6 @@ export default function VideoLinks({
 
 
 
-function jumpToResource(id:string){
-
- 
-   goToResource(id);
-
-}
-
 
 
 
@@ -172,12 +165,7 @@ function jumpToResource(id:string){
 
                 key={link.id}
 
-
-                onClick={() =>
-                  jumpToResource(
-                    resource.id
-                  )
-                }
+onClick={() => goToResource(resource.id)}
 
 
 

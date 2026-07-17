@@ -58,76 +58,66 @@ export default function ResourceSection({
 
 
 
-  function goToResource(resourceId:string){
+  function goToResource(resourceId: string) {
 
-    const target =
-      resourceList.find(
-        resource =>
-          resource.id === resourceId
-      );
-
-
-    if(!target){
-      return;
+  router.replace(
+    `?resource=${resourceId}`,
+    {
+      scroll: false
     }
+  );
 
 
-    setFilter(target.type);
-
-
-
-    const params =
-      new URLSearchParams(
-        searchParams.toString()
-      );
-
-
-    params.set(
-      "resource",
-      resourceId
+  const target =
+    resourceList.find(
+      resource =>
+        resource.id === resourceId
     );
 
 
-    router.push(
-      `?${params.toString()}`,
-      {
-        scroll:false
-      }
-    );
-
-
-
-    setTimeout(() => {
-
-      const element =
-        document.getElementById(
-          `resource-${resourceId}`
-        );
-
-
-      if(element){
-
-        element.scrollIntoView({
-          behavior:"smooth",
-          block:"start"
-        });
-
-
-        setHighlightedResource(resourceId);
-
-
-        setTimeout(() => {
-
-          setHighlightedResource(null);
-
-        },2000);
-
-      }
-
-    },100);
-
+  if(!target){
+    return;
   }
 
+
+  setFilter(target.type);
+
+
+  setTimeout(() => {
+
+    const element =
+      document.getElementById(
+        `resource-${resourceId}`
+      );
+
+
+    if(element){
+
+      element.scrollIntoView({
+
+        behavior:"smooth",
+
+        block:"start"
+
+      });
+
+
+      setHighlightedResource(
+        resourceId
+      );
+
+
+      setTimeout(() => {
+
+        setHighlightedResource(null);
+
+      },2000);
+
+    }
+
+  },100);
+
+}
 
 
 
