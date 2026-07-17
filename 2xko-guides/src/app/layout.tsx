@@ -2,8 +2,10 @@ import "./globals.css";
 
 import "react-tweet/theme.css";
 
-
 import Script from "next/script";
+
+import Navbar from "@/components/layout/Navbar";
+
 
 export default function RootLayout({
   children,
@@ -12,22 +14,29 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+
       <body>
-        
+
+        <Navbar />
+
 
         <Script src="https://platform.twitter.com/widgets.js" />
 
+
         <main
-  className="
-    mx-auto
-    max-w-6xl
-    px-8
-    py-8
-  "
->
-  {children}
-</main>
+          className="
+            mx-auto
+            max-w-6xl
+            px-8
+            py-8
+          "
+        >
+          {children}
+        </main>
+
+
       </body>
+
     </html>
   );
 }

@@ -12,8 +12,8 @@ type Props = {
  
 
   onEdit: (
-    resource: Resource
-  ) => void;
+  resource: Resource | null
+) => void;
 
   onDelete: (
     id:string
@@ -104,7 +104,7 @@ export default function TeamResourceList({
 
             index={index}
 
-            onEdit={onEdit}
+            onEdit={onEdit} 
 
             onDelete={onDelete}
 

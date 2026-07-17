@@ -79,6 +79,11 @@ export default function ResourceSection({
     return;
   }
 
+window.history.replaceState(
+  {},
+  "",
+  `#resource-${resourceId}`
+);
 
   setFilter(target.type);
 
@@ -120,7 +125,19 @@ export default function ResourceSection({
 }
 
 
+useEffect(() => {
 
+  const hash = window.location.hash;
+
+  if (!hash.startsWith("#resource-")) {
+    return;
+  }
+
+  const resourceId = hash.replace("#resource-", "");
+
+  goToResource(resourceId);
+
+}, []);
 
 
   useEffect(() => {
@@ -294,13 +311,11 @@ export default function ResourceSection({
 
 
 
-  function startEditing(resource:Resource){
+function startEditing(resource: Resource | null){
 
-    setEditingResource(resource);
+  setEditingResource(resource);
 
-  }
-
-
+}
 
 
 

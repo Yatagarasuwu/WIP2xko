@@ -3,7 +3,9 @@
 import { Resource } from "@/types/resource";
 
 import VideoAccordian from "@/components/resources/videos/VideoAccordian";
+
 import ResourceForm from "./ResourceForm";
+
 
 type Props = {
 
@@ -13,9 +15,9 @@ type Props = {
 
   index: number;
 
-  onEdit: (
-    resource: Resource
-  ) => void;
+ onEdit: (
+  resource: Resource | null
+) => void;
 
   onDelete: (
     id: string
@@ -32,13 +34,14 @@ type Props = {
     resource: Resource
   ) => void;
 
- goToResource: (
-  id:string
-)=>void;
+  goToResource: (
+    id: string
+  ) => void;
 
-highlightedResource:string | null;
+  highlightedResource: string | null;
 
 };
+
 
 
 export default function ResourceCard({
@@ -60,13 +63,11 @@ export default function ResourceCard({
   editingResource,
 
   onSaveEdit,
-  
+
   highlightedResource,
 
-  
- 
-
 }: Props) {
+
 
 
   const isEditing =
@@ -74,50 +75,64 @@ export default function ResourceCard({
 
 
 
+
   function getColors() {
 
-    switch (resource.type) {
+    switch(resource.type) {
 
       case "combo":
+
         return {
-          border: "border-l-blue-500",
-          badge: "bg-blue-600",
+          border:"border-l-blue-500",
+          badge:"bg-blue-600",
         };
+
 
       case "mixup":
+
         return {
-          border: "border-l-purple-500",
-          badge: "bg-purple-600",
+          border:"border-l-purple-500",
+          badge:"bg-purple-600",
         };
+
 
       case "oki":
+
         return {
-          border: "border-l-cyan-500",
-          badge: "bg-cyan-600",
+          border:"border-l-cyan-500",
+          badge:"bg-cyan-600",
         };
+
 
       case "pressure":
+
         return {
-          border: "border-l-orange-500",
-          badge: "bg-orange-600",
+          border:"border-l-orange-500",
+          badge:"bg-orange-600",
         };
+
 
       case "neutral":
+
         return {
-          border: "border-l-green-500",
-          badge: "bg-green-600",
+          border:"border-l-green-500",
+          badge:"bg-green-600",
         };
+
 
       case "flash":
+
         return {
-          border: "border-l-yellow-500",
-          badge: "bg-yellow-600",
+          border:"border-l-yellow-500",
+          badge:"bg-yellow-600",
         };
 
+
       default:
+
         return {
-          border: "border-l-zinc-600",
-          badge: "bg-zinc-600",
+          border:"border-l-zinc-600",
+          badge:"bg-zinc-600",
         };
 
     }
@@ -125,7 +140,10 @@ export default function ResourceCard({
   }
 
 
-  const colors = getColors();
+
+  const colors =
+    getColors();
+
 
 
 
@@ -133,36 +151,47 @@ export default function ResourceCard({
 
     <div
 
-id={`resource-${resource.id}`}
+      id={`resource-${resource.id}`}
 
-className={`
-rounded-xl
-border
-border-zinc-700
-border-l-4
-${colors.border}
-bg-zinc-900
-p-6
-space-y-6
-shadow-sm
-transition-all
-duration-500
+      className={`
 
-${
-  highlightedResource === resource.id
-  ? "ring-2 ring-blue-500 shadow-lg shadow-blue-500/20"
-  : ""
-}
+        rounded-xl
 
-`}
->
+        border
+
+        border-zinc-700
+
+        border-l-4
+
+        ${colors.border}
+
+        bg-zinc-900
+
+        shadow-sm
+
+        transition-all
+
+        duration-500
+
+
+        ${
+          highlightedResource === resource.id
+          ? "ring-2 ring-blue-500 shadow-lg shadow-blue-500/20"
+          : ""
+        }
+
+      `}
+
+    >
+
+
 
 
       {
-
         isEditing ? (
 
           <div className="p-4">
+
 
             <ResourceForm
 
@@ -176,6 +205,7 @@ ${
 
             />
 
+
           </div>
 
 
@@ -184,32 +214,39 @@ ${
           <>
 
 
-            <div className="p-4 space-y-3">
+            <div
+
+              className="
+                p-4
+                space-y-3
+              "
+
+            >
 
 
               <span
 
                 className={`
 
-                inline-flex
+                  inline-flex
 
-                rounded-md
+                  rounded-md
 
-                px-2
+                  px-2
 
-                py-1
+                  py-1
 
-                text-xs
+                  text-xs
 
-                font-bold
+                  font-bold
 
-                uppercase
+                  uppercase
 
-                tracking-wider
+                  tracking-wider
 
-                text-white
+                  text-white
 
-                ${colors.badge}
+                  ${colors.badge}
 
                 `}
 
@@ -221,51 +258,45 @@ ${
 
 
 
-              <div>
 
+              <h2
 
-                <h2 className="
-
-                  mt-2
-
+                className="
                   text-xl
-
                   font-bold
-
                   text-white
+                "
 
-                ">
+              >
 
-                  {resource.title || "Untitled Resource"}
+                {resource.title || "Untitled Resource"}
 
-                </h2>
+              </h2>
 
 
 
-                {
-                  resource.description && (
 
-                    <p className="
+              {
+                resource.description && (
 
-                      mt-2
+                  <p
 
+                    className="
                       text-sm
-
                       text-zinc-400
-
                       leading-relaxed
+                    "
 
-                    ">
+                  >
 
-                      {resource.description}
+                    {resource.description}
 
-                    </p>
+                  </p>
 
-                  )
-                }
+                )
 
+              }
 
-              </div>
 
 
             </div>
@@ -273,41 +304,30 @@ ${
 
 
 
-            {
 
+
+            {
               resource.videos.length > 0 && (
 
                 <div
 
                   className="
-
-                  border-t
-
-                  border-zinc-800
-
-                  px-4
-
-                  py-4
-
+                    border-t
+                    border-zinc-800
+                    px-4
+                    py-4
                   "
 
                 >
 
                   <VideoAccordian
 
-                    videos={
-                      resource.videos
-                    }
+                    videos={resource.videos}
 
-                    allResources={
-                      allResources
-                    }
+                    allResources={allResources}
 
-                    goToResource={
-    goToResource
-  }
-                      
- 
+                    goToResource={goToResource}
+
                   />
 
 
@@ -316,6 +336,7 @@ ${
               )
 
             }
+
 
 
           </>
@@ -327,29 +348,24 @@ ${
 
 
 
+
+
+
       <div
 
         className="
-
-        border-t
-
-        border-zinc-800
-
-        bg-zinc-900/40
-
-        px-4
-
-        py-3
-
-        flex
-
-        justify-between
-
-        items-center
-
+          border-t
+          border-zinc-800
+          bg-zinc-900/40
+          px-4
+          py-3
+          flex
+          justify-between
+          items-center
         "
 
       >
+
 
 
 
@@ -363,21 +379,13 @@ ${
             }
 
             className="
-
-            h-8
-
-            w-8
-
-            rounded-md
-
-            border
-
-            border-zinc-700
-
-            bg-zinc-800
-
-            hover:bg-zinc-700
-
+              h-8
+              w-8
+              rounded-md
+              border
+              border-zinc-700
+              bg-zinc-800
+              hover:bg-zinc-700
             "
 
           >
@@ -388,6 +396,7 @@ ${
 
 
 
+
           <button
 
             onClick={() =>
@@ -395,21 +404,13 @@ ${
             }
 
             className="
-
-            h-8
-
-            w-8
-
-            rounded-md
-
-            border
-
-            border-zinc-700
-
-            bg-zinc-800
-
-            hover:bg-zinc-700
-
+              h-8
+              w-8
+              rounded-md
+              border
+              border-zinc-700
+              bg-zinc-800
+              hover:bg-zinc-700
             "
 
           >
@@ -425,38 +426,33 @@ ${
 
 
 
+
+
         <div className="flex gap-2">
 
 
           <button
 
             onClick={() =>
-              onEdit(resource)
+              onEdit(isEditing ? null : resource)
             }
 
             className="
-
-            rounded-md
-
-            bg-blue-600
-
-            px-3
-
-            py-1.5
-
-            text-sm
-
-            font-medium
-
-            hover:bg-blue-500
-
+              rounded-md
+              bg-blue-600
+              px-3
+              py-1.5
+              text-sm
+              hover:bg-blue-500
             "
 
           >
 
-            {isEditing ? "Editing..." : "Edit"}
+         {isEditing ? "Cancel" : "Edit"}
 
           </button>
+
+
 
 
 
@@ -468,21 +464,12 @@ ${
             }
 
             className="
-
-            rounded-md
-
-            bg-red-700
-
-            px-3
-
-            py-1.5
-
-            text-sm
-
-            font-medium
-
-            hover:bg-red-600
-
+              rounded-md
+              bg-red-700
+              px-3
+              py-1.5
+              text-sm
+              hover:bg-red-600
             "
 
           >
@@ -493,6 +480,7 @@ ${
 
 
         </div>
+
 
 
       </div>

@@ -22,6 +22,9 @@ export async function POST(
         secondaryChampion:
           body.secondaryChampion ?? null,
 
+        ownerId:
+          body.ownerId ?? null,
+
       },
 
     });
